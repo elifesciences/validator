@@ -1,8 +1,7 @@
 # Set environment.
 # This script should be sourced from a bash shell.
 
-set -e # everything must pass
-set -u # no unbound variables
+set -e # everything must pass 
 
 # Sanity check - are we in the right place?
 if ! [ -e validate.js ]
