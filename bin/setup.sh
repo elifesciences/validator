@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e # everything must pass
 set -u # no unbound variables
@@ -21,10 +21,6 @@ if ! [ -d chosen ]; then
     mkdir -p chosen
     cd chosen
     wget https://github.com/harvesthq/chosen/releases/download/1.4.2/chosen_v1.4.2.zip
-    if [ $? -ne 0 ]; then
-        echo "wget chosen failed; aborting"
-        exit 1
-    fi
     unzip chosen_v1.4.2.zip
 fi
 
@@ -32,20 +28,12 @@ fi
 cd $JATS4R_HOME/lib
 if ! [ -e spin.min.js ]; then
     wget https://raw.githubusercontent.com/fgnass/spin.js/2.3.2/spin.min.js
-    if [ $? -ne 0 ]; then
-        echo "wget spin.min.js failed; aborting"
-        exit 1
-    fi
 fi
 
 # Saxon CE 1.1
 cd $JATS4R_HOME/lib
 if ! [ -d Saxonce ]; then
     wget http://www.saxonica.com/ce/download/Saxon-CE_1.1.zip
-    if [ $? -ne 0 ]; then
-        echo "wget failed; aborting"
-        exit 1
-    fi
     unzip Saxon-CE_1.1.zip 'Saxonce/*'
     rm Saxon-CE_1.1.zip
 fi
@@ -58,10 +46,6 @@ fi
 cd $JATS4R_HOME/lib
 if ! [ -d DtdAnalyzer-0.5 ]; then
     wget http://dtd.nlm.nih.gov/ncbi/dtdanalyzer/downloads/DtdAnalyzer-0.5.zip
-    if [ $? -ne 0 ]; then
-        echo "wget failed; aborting"
-        exit 1
-    fi
     unzip DtdAnalyzer-0.5.zip
     rm DtdAnalyzer-0.5.zip
 fi
@@ -85,12 +69,8 @@ if ! [ -d src/niso-jats/publishing ]; then
 fi
 
 # Generate flattened DTDs and RNGs in the `jats-schema` subdirectory
-if ! [ -d jats-flat ]; then
+if ! [ -d jats/flat ]; then
     JATS_BASE=. python3 ./flatten.py
-    if [ $? -ne 0 ]; then
-        echo "flatten failed; aborting"
-        exit 1
-    fi
 fi
 
 # Saxon
@@ -119,7 +99,6 @@ cd $JATS4R_HOME/lib
 if ! [ -d xml-commons-resolver-1.2 ]; then
     unzip ../assets/xml-commons-resolver-1.2.zip
 fi
-
 
 # Finally, process the schematron
 cd $JATS4R_HOME
