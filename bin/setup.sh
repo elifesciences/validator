@@ -69,7 +69,7 @@ if ! [ -d src/niso-jats/publishing ]; then
 fi
 
 # Generate flattened DTDs and RNGs in the `jats-schema` subdirectory
-if ! [ -d jats/flat ]; then
+if ! [ -d flat ]; then
     JATS_BASE=. python3 ./flatten.py
 fi
 
