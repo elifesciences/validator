@@ -1,6 +1,8 @@
 # Set environment.
 # This script should be sourced from a bash shell.
 
+set -e # everything must pass
+set -u # no unbound variables
 
 # Sanity check - are we in the right place?
 if ! [ -e validate.js ]
@@ -8,16 +10,16 @@ if ! [ -e validate.js ]
     echo Error: missing validate.js.
     echo You must run this script from within the root of the JATS4R validator 
     echo repository.
-    return
+    exit 1
 fi
 export JATS4R_HOME=`pwd`
 
 # Create virtualenv if needed; and activate it
 if ! [ -f env/bin/activate ]; then
   virtualenv -p python3 env
-  pip install -r requirements.txt
 fi
 . env/bin/activate
+pip install -r requirements.txt
 
 export DTDANALYZER_HOME=$JATS4R_HOME/lib/DtdAnalyzer-0.5
 export SAXON_JAR=$DTDANALYZER_HOME/lib/saxon9he.jar

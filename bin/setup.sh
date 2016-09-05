@@ -1,5 +1,9 @@
 #!/bin/sh
 
+set -e # everything must pass
+set -u # no unbound variables
+set -xv # output interpolated
+
 # Sanity check - has setenv.sh been sourced?
 if [ -z "$JATS4R_HOME" ]; then
     echo "Error: JATS4R_HOME is not set."
@@ -119,5 +123,8 @@ fi
 
 # Finally, process the schematron
 cd $JATS4R_HOME
-bin/process-schematron.sh
+if ! [ -f .schematron-processed.flag ]; then
+    bin/process-schematron.sh
+    touch .schematron-processed.flag
+fi
 
